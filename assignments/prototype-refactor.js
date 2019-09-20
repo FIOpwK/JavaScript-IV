@@ -1,3 +1,5 @@
+
+
 /* 
 
 Prototype Refactor
@@ -150,6 +152,7 @@ Prototype Refactor
 
 class GameObject {
   constructor(createdAt, name, dimensions) {
+    
 
     this.createdAt = createdAt;
     this.name = name;
@@ -172,12 +175,14 @@ class GameObject {
 
   class CharacterStats extends GameObject {
     constructor(healthPoints) {
-      super.destroy();
+      super(healthPoints);
 
       this.healthPoints = healthPoints;
       
-    }
-    takeDamage() { return `${this.name} took damage.`; }
+      super.destroy();
+    };
+    
+     takeDamage() { return `${this.name} took damage.`; }
   }
 
 
@@ -196,14 +201,16 @@ class GameObject {
 
   class Humanoid extends CharacterStats {
     constructor(team, weapons, language) {
-      super.destroy();
-      super.takeDamage();
+      super(team, weapons, language);
+    
 
       this.team = team;
       this.weapons = weapons;
       this.language = language;
+      super.destroy();
+      super.takeDamage();
     }
-    greet() { return `${this.name} offers a greeting in ${this.language}.`}
+    greet() { return `${super.name} offers a greeting in ${super.language}.`}
   }
 
   //Object.setPrototypeOf(GameObject, CharacterStats);
@@ -259,7 +266,7 @@ class GameObject {
     language: 'Elvish',
   });
 
-  display(mage.createdAt); // Today's date
+  console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
   console.log(mage.name); // Bruce
